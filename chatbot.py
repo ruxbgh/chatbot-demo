@@ -6,7 +6,7 @@ import os  # Permite folosirea variabilelor de mediu pentru siguranță
 app = Flask(__name__, static_folder="static")
 CORS(app)  # Activează CORS pentru toate cererile
 
-# Încarcă API Key din variabila de mediu (Asigură-te că ai setat-o)
+# Încarcă API Key din variabila de mediu (Asigură-te că ai setat-o corect)
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 @app.route("/", methods=["GET"])
@@ -17,14 +17,16 @@ def home():
 def chatbot_response(user_input):
     """Funcția care interoghează OpenAI"""
     try:
-        response = openai.ChatCompletion.create(
+        client = openai.OpenAI()  # Inițializare client OpenAI
+
+        response = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
-                {"role": "system", "content": "Ești un chatbot pentru un restaurant."},
+                {"role": "system", "content": "Ești un chatbot pentru un restaurant. Răspunde politicos și oferă detalii despre meniu, program și rezervări."},
                 {"role": "user", "content": user_input}
             ]
         )
-        return response["choices"][0]["message"]["content"]
+        return response.choices[0].message.content
     except Exception as e:
         return f"Eroare la interogarea OpenAI: {str(e)}"
 
