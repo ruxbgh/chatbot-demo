@@ -1,8 +1,10 @@
+from flask_cors import CORS
 from flask import Flask, request, jsonify, render_template
 import openai
 import os  # Permite folosirea variabilelor de mediu pentru siguranță
 
 app = Flask(__name__)
+CORS(app)  # Activează CORS pentru toate cererile
 
 # Încarcă API Key din variabila de mediu (Mai sigur decât să o pui în cod!)
 openai.api_key = os.getenv("OPENAI_API_KEY")
