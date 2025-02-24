@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 import openai
 import os  # Permite folosirea variabilelor de mediu pentru siguranță
 
@@ -9,8 +9,7 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 @app.route("/", methods=["GET"])
 def home():
-    return "Chatbotul este activ! Trimite o cerere POST la /chat."
-
+    return app.send_static_file("index.html")  # Servim fișierul HTML
 
 def chatbot_response(user_input):
     try:
