@@ -85,7 +85,7 @@
             chatBox.innerHTML += `<div class='message user'>${message}</div>`;
             input.value = "";
 
-            let response = await fetch("https://chatbot-demo-mprb.onrender.com/chat", {
+            let response = await fetch("https://chatbot-demo-1.onrender.com/chat", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ message: message })
