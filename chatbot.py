@@ -7,9 +7,13 @@ app = Flask(__name__)
 # Încarcă API Key din variabila de mediu (Mai sigur decât să o pui în cod!)
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
+from flask import Flask, request, jsonify, send_from_directory
+
+app = Flask(__name__, static_folder="static")
+
 @app.route("/", methods=["GET"])
 def home():
-    return app.send_static_file("index.html")  # Servim fișierul HTML
+    return send_from_directory("static", "index.html")
 
 def chatbot_response(user_input):
     try:
